@@ -1,4 +1,6 @@
 import Layout, { siteTitle } from '../components/layout'
+import Pagination from '../components/pagination'
+import pokemons from '../constants/pokemons.json'
 
 const products = [
     {
@@ -34,16 +36,16 @@ const products = [
         imageAlt: 'Hand holding black machined steel mechanical pencil with brass tip and top.',
     },
     // More products...
-]
+];
 
-export default function Example() {
+export default function Home() {
     return (
         <Layout>
-            <div style={{ background: `url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg")` }}>
+            <div id="pokelist" style={{ background: `url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg")` }}>
                 <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-                    <h2 className="sr-only">Products</h2>
+                    <h2 className="sr-only">Pokémon</h2>
 
-                    <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                    <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mb-8">
                         {products.map((product) => (
                             <a key={product.id} href={product.href} className="group">
                                 <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
@@ -58,6 +60,8 @@ export default function Example() {
                             </a>
                         ))}
                     </div>
+
+                    <Pagination />
                 </div>
             </div>
         </Layout>

@@ -3,11 +3,11 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
 const navigation = [
-    { name: 'PokéList', href: '#' },
+    { name: 'PokéList', href: '#pokelist' },
     { name: 'My Pokémon', href: '#' }
 ]
 
-export default function Example({ children }) {
+export default function Layout({ children }) {
     return (
         <>
             <header>
@@ -119,7 +119,7 @@ export default function Example({ children }) {
                                     <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                                         <div className="rounded-md shadow">
                                             <a
-                                                href="#"
+                                                href="#pokelist"
                                                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                                             >
                                                 See all Pokémon
