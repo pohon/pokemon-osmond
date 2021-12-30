@@ -20,6 +20,12 @@ export default function Home() {
           (This is a sample website - you’ll be building a site like this on{' '}
           <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
         </p>
+        <h1 className="text-3xl font-bold underline">
+          Hello world!
+        </h1>
+        <button className="button bg-sky-600 hover:bg-sky-700">
+          Save changes
+        </button>
       </section>
     </Layout>
   )
