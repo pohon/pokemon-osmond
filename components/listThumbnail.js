@@ -1,15 +1,19 @@
 import useSWR from 'swr';
+import cn from 'classnames';
 
 import fetcher from '../utils/fetcher'
 
 export default ({ url }) => {
 
     // hooks
-    const { data } = useSWR(url, fetcher)
+    const { data, error } = useSWR(url, fetcher)
+    const loading = !error && !data // based on docs
 
     return (
         <a href={data?.href} className="group">
-            <div className="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+            <div className={cn('w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8', {
+                'animate-pulse': loading
+            })}>
                 <img
                     src={data?.sprites?.other?.['official-artwork']?.front_default}
                     alt={data?.name}

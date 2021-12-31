@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useSWR from 'swr';
 
 import fetcher from '../utils/fetcher'
@@ -5,12 +6,24 @@ import fetcher from '../utils/fetcher'
 import Layout from '../components/layout'
 import ListThumbnail from '../components/listThumbnail'
 import Pagination from '../components/pagination'
+import ListSkeleton from '../components/listSkeleton';
 
 export default function Home({ }) {
 
+    // states
+    const [limit, setLimit] = useState(20);
+    const [offset, setOffset] = useState(0);
+    const params = new URLSearchParams({ limit, offset }).toString();
+
     // hooks
-    const { data } = useSWR('https://pokeapi.co/api/v2/pokemon', fetcher)
-    const results = data?.results || [];
+    const { data, error } = useSWR(`https://pokeapi.co/api/v2/pokemon?${params}`, fetcher)
+    const results = data?.results || []
+    const isLoadingList = !error && !data // based on docs
+
+    // handlers
+    const handlePageChange = newOffset => {
+        setOffset(newOffset);
+    };
 
     return (
         <Layout>
@@ -19,12 +32,31 @@ export default function Home({ }) {
                     <h2 className="sr-only">Pokémon</h2>
 
                     <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mb-8">
-                        {results.map((pokemon, idx) => (
-                            <ListThumbnail key={`result-${idx}`} { ...pokemon } />
-                        ))}
+                        {
+                            isLoadingList ? (
+                                Array.from(Array(limit), (e, idx) => (
+                                    <ListSkeleton key={`list-skeleton-${idx}`} />
+                                ))
+                            ) : (
+                                results.map((pokemon, idx) => (
+                                    <ListThumbnail key={`list-thumbnail-${idx}`} {...pokemon} />
+                                ))
+                            )
+                        }
                     </div>
 
-                    <Pagination />
+                    {
+                        isLoadingList ? (
+                            <div className="animate-pulse bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" />
+                        ) : (
+                            <Pagination
+                                count={data?.count || 0}
+                                limit={limit}
+                                offset={offset}
+                                onChange={handlePageChange}
+                            />
+                        )
+                    }
                 </div>
             </div>
         </Layout>
