@@ -4,16 +4,19 @@ import useSWR from 'swr';
 import fetcher from '../utils/fetcher'
 
 import Layout from '../components/layout'
-import ListThumbnail from '../components/listThumbnail'
+import ModalDetail from '../components/modalDetail';
 import Pagination from '../components/pagination'
-import ListSkeleton from '../components/listSkeleton';
+import ListSkeleton from '../components/listSkeleton'
+import ListThumbnail from '../components/listThumbnail'
 
-export default function Home({ }) {
+const limit = 20;
+
+export default function Home({}) {
 
     // states
-    const [limit, setLimit] = useState(20);
     const [offset, setOffset] = useState(0);
     const params = new URLSearchParams({ limit, offset }).toString();
+    const [modalData, setModalData] = useState(null);   // value is either 'null' or object
 
     // hooks
     const { data, error } = useSWR(`https://pokeapi.co/api/v2/pokemon?${params}`, fetcher)
@@ -23,6 +26,14 @@ export default function Home({ }) {
     // handlers
     const handlePageChange = newOffset => {
         setOffset(newOffset);
+    };
+    const handleClickThumbnail = pokemonDetail => {
+        setModalData(pokemonDetail);
+    };
+    const handleModalChange = () => {
+        if (!!modalData) {
+            setModalData(null);
+        }
     };
 
     return (
@@ -39,7 +50,11 @@ export default function Home({ }) {
                                 ))
                             ) : (
                                 results.map((pokemon, idx) => (
-                                    <ListThumbnail key={`list-thumbnail-${idx}`} {...pokemon} />
+                                    <ListThumbnail 
+                                        key={`list-thumbnail-${idx}`} 
+                                        onClick={handleClickThumbnail}
+                                        {...pokemon}
+                                    />
                                 ))
                             )
                         }
@@ -59,6 +74,8 @@ export default function Home({ }) {
                     }
                 </div>
             </div>
+
+            <ModalDetail modalData={modalData} onChange={handleModalChange} />
         </Layout>
     )
 }

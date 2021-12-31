@@ -56,7 +56,9 @@ export default ({ count, limit, offset, onChange }) => {
                         <a
                             onClick={handleClickPrev}
                             className={cn('relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500', {
-                                'hover:bg-gray-50': !isFirstPage
+                                'hover:bg-gray-50 cursor-pointer': !isFirstPage,
+                                'cursor-not-allowed': isFirstPage
+                                
                             })}
                         >
                             <span className="sr-only">Previous</span>
@@ -80,7 +82,7 @@ export default ({ count, limit, offset, onChange }) => {
                                         key={`page-btn-${idx}`}
                                         onClick={handleClickPage(page)}
                                         aria-current="page"
-                                        className={cn('relative inline-flex items-center px-4 py-2 border text-sm font-medium', {
+                                        className={cn('cursor-pointer relative inline-flex items-center px-4 py-2 border text-sm font-medium', {
                                             'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': currentPage === page,
                                             'bg-white border-gray-300 text-gray-500 hover:bg-gray-50': currentPage !== page
                                         })}
@@ -94,7 +96,8 @@ export default ({ count, limit, offset, onChange }) => {
                         <a
                             onClick={handleClickNext}
                             className={cn('relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500', {
-                                'hover:bg-gray-50': !isLastPage
+                                'hover:bg-gray-50 cursor-pointer': !isLastPage,
+                                'cursor-not-allowed': isLastPage
                             })}
                         >
                             <span className="sr-only">Next</span>
