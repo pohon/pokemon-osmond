@@ -1,12 +1,52 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+
+import ModalFeedback from './modalFeedback'
 
 export default ({ modalData, onChange }) => {
 
   // props
   const open = !!modalData;
   const types = modalData?.types || [];
+
+  // states
+  const [modalFeedbackObj, setModalFeedbackObj] = useState(null)    // value is either 'null' or object
+
+  // handlers
+  const handleModalFeedbackChange = () => {
+    if (!!modalFeedbackObj) {
+      setModalFeedbackObj(null)
+    }
+  }
+  const handlePokemonCatch = () => {
+    const currentCatchedPokemon = JSON.parse(localStorage.getItem('CATCHED_POKEMON')) || [];
+    const currentCatchedPokemonIds = currentCatchedPokemon.map(o => o.id);
+
+    if (currentCatchedPokemonIds.indexOf(modalData?.id) > -1) {
+      setModalFeedbackObj({
+        'title': 'Failed to catch',
+        'description': 'The Pokémon you choose is already collected. Please go to My Pokémon to view all catched Pokémon',
+        'isError': true
+      })
+
+      return
+    }
+
+    const newCatchedPokemon = [
+      ...currentCatchedPokemon,
+      {
+        id: modalData?.id,
+        timestamp: Date.now()
+      }];
+
+    localStorage.setItem("CATCHED_POKEMON", JSON.stringify(newCatchedPokemon));
+
+    setModalFeedbackObj({
+      'title': 'Successfully catched',
+      'description': 'The Pokémon is successfully collected! Please go to My Pokémon to view all catched Pokémon'
+    })
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -118,14 +158,12 @@ export default ({ modalData, onChange }) => {
 
                     <section aria-labelledby="options-heading" className="mt-10">
 
-                      <form>
-                        <button
-                          type="submit"
-                          className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Catch this Pokémon
-                        </button>
-                      </form>
+                      <button
+                        className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        onClick={handlePokemonCatch}
+                      >
+                        Catch this Pokémon
+                      </button>
                     </section>
                   </div>
                 </div>
@@ -133,6 +171,11 @@ export default ({ modalData, onChange }) => {
             </div>
           </Transition.Child>
         </div>
+
+        {/* feedback modal must be nested --> https://github.com/tailwindlabs/headlessui/issues/825 */}
+
+        <ModalFeedback modalData={modalFeedbackObj} onChange={handleModalFeedbackChange} />
+
       </Dialog>
     </Transition.Root>
   )

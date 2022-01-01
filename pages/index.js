@@ -14,9 +14,9 @@ const limit = 20;
 export default function Home({}) {
 
     // states
-    const [offset, setOffset] = useState(0);
-    const params = new URLSearchParams({ limit, offset }).toString();
-    const [modalData, setModalData] = useState(null);   // value is either 'null' or object
+    const [offset, setOffset] = useState(0)
+    const params = new URLSearchParams({ limit, offset }).toString()
+    const [modalData, setModalData] = useState(null)   // value is either 'null' or object
 
     // hooks
     const { data, error } = useSWR(`https://pokeapi.co/api/v2/pokemon?${params}`, fetcher)
@@ -25,16 +25,16 @@ export default function Home({}) {
 
     // handlers
     const handlePageChange = newOffset => {
-        setOffset(newOffset);
-    };
+        setOffset(newOffset)
+    }
     const handleClickThumbnail = pokemonDetail => {
-        setModalData(pokemonDetail);
-    };
+        setModalData(pokemonDetail)
+    }
     const handleModalChange = () => {
         if (!!modalData) {
-            setModalData(null);
+            setModalData(null)
         }
-    };
+    }
 
     return (
         <Layout home>
@@ -53,6 +53,7 @@ export default function Home({}) {
                                     <ListThumbnail 
                                         key={`list-thumbnail-${idx}`} 
                                         onClick={handleClickThumbnail}
+                                        
                                         {...pokemon}
                                     />
                                 ))

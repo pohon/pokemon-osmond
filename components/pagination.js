@@ -47,7 +47,7 @@ export default ({ count, limit, offset, onChange }) => {
             <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                 <div>
                     <p className="text-sm text-gray-700">
-                        Showing <span className="font-medium">{offset + 1}</span> to <span className="font-medium">{offset + limit}</span> of{' '}
+                        Showing <span className="font-medium">{offset + 1}</span> to <span className="font-medium">{isLastPage ? count : offset + limit}</span> of{' '}
                         <span className="font-medium">{count}</span> results
                     </p>
                 </div>
