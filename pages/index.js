@@ -37,7 +37,7 @@ export default function Home({}) {
     };
 
     return (
-        <Layout>
+        <Layout home>
             <div id="pokelist" style={{ background: `url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg")` }}>
                 <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Pokémon</h2>
