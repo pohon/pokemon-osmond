@@ -5,7 +5,7 @@ Gotta catch em all
 
 ## Features
 - client-side rendering (using React & Next.js)
-- responsive
+- responsive css framework by Tailwind css
 - with pagination
 - tested with Jest & react-testing-library
 
