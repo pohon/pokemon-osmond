@@ -9,6 +9,9 @@ Gotta catch em all
 - with pagination
 - tested with Jest & react-testing-library
 
+## Production
+Visit <a href="https://pokemon-osmond.vercel.app">https://pokemon-osmond.vercel.app</a> to see live production website
+
 ## Install
 
     $ git clone https://github.com/pohon/pokemon-osmond.git
@@ -25,6 +28,3 @@ Gotta catch em all
 
 ## Author
   - Sullivan Osmond (https://github.com/pohon)
-
-## Production
-Visit <a href="https://pokemon-osmond.vercel.app">https://pokemon-osmond.vercel.app</a> to see live production website
