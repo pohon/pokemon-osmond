@@ -40,7 +40,6 @@ export default function Home({}) {
         <Layout home>
             <div id="pokelist" style={{ background: `url("https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg")` }}>
                 <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-                    <h2 className="sr-only">Pokémon</h2>
 
                     <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mb-8">
                         {
@@ -63,7 +62,7 @@ export default function Home({}) {
 
                     {
                         isLoadingList ? (
-                            <div className="animate-pulse bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" />
+                            <div data-testid='listLoader' className="animate-pulse bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" />
                         ) : (
                             <Pagination
                                 count={data?.count || 0}

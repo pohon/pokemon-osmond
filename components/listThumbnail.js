@@ -10,7 +10,7 @@ export default ({ onClick, url }) => {
     const loading = !error && !data // based on docs
 
     return (
-        <a onClick={() => onClick(data)} className="group cursor-pointer">
+        <a data-testid="pokemonThumbnail" onClick={() => onClick(data)} className="group cursor-pointer">
             <div className={cn('w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8', {
                 'animate-pulse': loading
             })}>
